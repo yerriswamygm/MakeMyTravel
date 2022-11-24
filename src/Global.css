@@ -1,10 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Alegreya&family=Alfa+Slab+One&family=Barlow&family=Carter+One&family=Lato&family=Monoton&family=Montserrat:wght@500&family=Orbitron:wght@500&family=Oswald:wght@300&family=Philosopher:ital@1&family=Rubik+Dirt&family=Secular+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
+:root {
+  --base-color: #6739b7;
+}
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
+
 body {
   background: #efefef;
   font-family: "Lato", sans-serif;
@@ -16,14 +21,10 @@ body {
   border: 1px solid #6739b7 !important;
 }
 
-:root {
-  --base-color: #6739b7;
-}
-
 #spinnerBlock {
   position: absolute;
-  left: 50%;
   top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
 }
 
@@ -31,7 +32,6 @@ body {
   width: 100px;
   overflow: visible;
 }
-
 #spinnerBlock svg circle {
   stroke: var(--base-color);
   transform-origin: 50px 50px;

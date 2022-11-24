@@ -1,27 +1,28 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
 import Home from "./pages/Home";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import NotFound from "./pages/NotFound";
-import AuthProvider from "./apis/AuthContextApi";
-import PublicRoute from "./routes/PublicRoute";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"
+import "react-toastify/dist/ReactToastify.css";
+import AuthProvider from "./apis/AuthContextApi";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import PublicRoute from "./routes/PublicRoute";
 import Profile from "./components/profile/Profile";
-import Spinner from "./pages/Spinner";
-import ProfileDefault from "./components/profile/ProfileDefault";
 import UploadPhoto from "./components/profile/UploadPhoto";
-
+import ProfileDefault from "./components/profile/ProfileDefault";
+import ResetPassword from "./components/auth/ResetPassword";
+import PhoneAuth from "./components/auth/PhoneAuth";
+import AddProfileData from "./components/profile/AddProfileData";
 const App = () => {
   return (
     <AuthProvider>
       <Router>
         <Navbar />
-        {/* <Spinner/> */}
-        <ToastContainer theme="dark"/>
+
+        <ToastContainer theme="dark" />
         <Routes>
           <Route
             path="/"
@@ -29,22 +30,6 @@ const App = () => {
               <ProtectedRoute>
                 <Home />
               </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <PublicRoute>
-                <Login />
-              </PublicRoute>
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <PublicRoute>
-                <Register />
-              </PublicRoute>
             }
           />
           <Route
@@ -63,7 +48,6 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="upload-profile-photo"
               element={
@@ -72,8 +56,47 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="add-profile"
+              element={
+                <ProtectedRoute>
+                  <AddProfileData />
+                </ProtectedRoute>
+              }
+            />
           </Route>
-
+          <Route
+            path="/login"
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <PublicRoute>
+                <Register />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/reset-password"
+            element={
+              <PublicRoute>
+                <ResetPassword />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/phone-auth"
+            element={
+              <PublicRoute>
+                <PhoneAuth />
+              </PublicRoute>
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

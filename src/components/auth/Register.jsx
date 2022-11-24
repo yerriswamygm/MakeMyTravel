@@ -1,12 +1,15 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import Styles from "./_auth.module.css";
 import { useNavigate } from "react-router-dom";
-import Auth_Image from "./authAssets/Register-auth.jpg"
-// import { toast } from "react-toastify";
-import {auth} from "../../apis/Firebase";
-//built-in firebase function for authentication
-import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
-import md5 from 'md5';
+import Auth_Image from "./auth_image.webp";
+import { toast } from "react-toastify";
+import { auth } from "../../apis/firebase";
+import md5 from "md5";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile,
+} from "firebase/auth";
 
 const Register = () => {
   let navigate = useNavigate();
@@ -14,10 +17,10 @@ const Register = () => {
     username: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    confirmpassword: "",
     isLoading: false,
   });
-  let { username, email, password, confirmPassword, isLoading } = state;
+  let { username, email, password, confirmpassword, isLoading } = state;
   let handleChange = e => {
     let { name, value } = e.target;
     setState({ ...state, [name]: value });
@@ -26,48 +29,44 @@ const Register = () => {
   let handleSubmit = async e => {
     e.preventDefault();
     try {
-      if (password !== confirmPassword) {
-        // toast.error("Password is not matched");
-        window.alert("Password is not matched");
-      }
-      else {
-        setState(isLoading=true)
-
-        let userData = await createUserWithEmailAndPassword(auth, email, password);
+      if (password !== confirmpassword) {
+        toast.error("Password is not matched");
+      } else {
+        setState({ isLoading: true });
+        let userData = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
         sendEmailVerification(userData.user);
-        let message = `Email verification has been sent to ${email} address please verify...`;
-
+        let message = `Email verification  has been sent to ${email} address please verify...`;
         updateProfile(userData.user, {
           displayName: username,
           photoURL: `https://www.gravatar.com/avatar/${md5(email)}?q=identicon`,
         });
-
-        // toast.success(message);
-        window.alert(message);
+        toast.success(message);
         navigate("/login");
-
       }
-      console.log(state);
+    } catch (error) {
+      toast.error(error.code);
     }
-    catch (error) {
-      console.log(error.code);
-    }
-//! resetting form fields after submission
+    //resetting form fields
     setState({
       username: "",
       email: "",
       password: "",
-      confirmPassword: "",
-      isLoading:false,
+      confirmpassword: "",
+      isLoading: false,
     });
-  }
+  };
+
   return (
     <section id={Styles.authBlock}>
       <article>
         <div className={Styles.authLeft}>
           <h1>Register</h1>
           <figure>
-            <img src={Auth_Image} alt="" />
+            <img src={Auth_Image} alt="auth_image" />
           </figure>
         </div>
         <div className={Styles.authRight}>
@@ -78,53 +77,51 @@ const Register = () => {
                 type="text"
                 id="username"
                 name="username"
-                placeholder="Enter username"
+                placeholder="enter username"
                 value={username}
-                required
                 onChange={handleChange}
+                required
               />
             </div>
-
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
                 type="email"
                 id="email"
                 name="email"
-                placeholder="Enter email"
+                placeholder="enter email"
                 value={email}
-                required
                 onChange={handleChange}
+                required
               />
             </div>
-
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <input
                 type="password"
                 id="password"
                 name="password"
-                placeholder="Enter password"
+                placeholder="enter password"
                 value={password}
-                required
                 onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="confirmpassword">Confirm Password</label>
+              <input
+                type="password"
+                id="confirmpassword"
+                name="confirmpassword"
+                placeholder="enter confirm password"
+                value={confirmpassword}
+                onChange={handleChange}
+                required
               />
             </div>
 
             <div className="form-group">
-              <label htmlFor="confirmPassword">Confirm Password</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="Confirm password"
-                value={confirmPassword}
-                required
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <button>{isLoading===true?"loading..." :"Register"}</button>
+              <button>{isLoading === true ? "loading ..." : "Register"}</button>
             </div>
           </form>
         </div>

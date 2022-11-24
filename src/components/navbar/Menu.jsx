@@ -1,18 +1,17 @@
 import React, { Fragment, useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Styles from "./_navbar.module.css";
 import { AuthContext } from "./../../apis/AuthContextApi";
 
 const Menu = () => {
-  let { authUser, isLoading,Logout } = useContext(AuthContext);
-  console.log(authUser);
+  let { authUser, isLoading, Logout } = useContext(AuthContext);
   let AuthenticatedUser = () => {
     return (
       <Fragment>
         <li>
-          <NavLink to="/profile" className={Styles.avatarURL}>
+          <Link to="/profile" className={Styles.avatarURL}>
             <img src={authUser.photoURL} alt={authUser.username} />
-          </NavLink>
+          </Link>
         </li>
         <li>
           <button onClick={() => Logout()}>Logout</button>
@@ -24,13 +23,13 @@ const Menu = () => {
     return (
       <Fragment>
         <li>
-          <NavLink to="/login" activeClassName="active">
-            Login
+          <NavLink to="/register" activeClassName="active">
+            Register
           </NavLink>
         </li>
         <li>
-          <NavLink to="/register" activeClassName="active">
-            Register
+          <NavLink to="/login" activeClassName="active">
+            Login
           </NavLink>
         </li>
       </Fragment>
@@ -44,7 +43,6 @@ const Menu = () => {
             Home
           </NavLink>
         </li>
-
         {isLoading === true ? (
           "loading..."
         ) : authUser === null ? (
@@ -52,7 +50,6 @@ const Menu = () => {
         ) : (
           <AuthenticatedUser />
         )}
-
       </ul>
     </div>
   );

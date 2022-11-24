@@ -1,7 +1,6 @@
 import React from "react";
 import Styles from "./_navbar.module.css";
 import { SiYourtraveldottv } from "react-icons/si";
-
 const Logo = () => {
   return (
     <div className={Styles.logoBlock}>
@@ -9,7 +8,7 @@ const Logo = () => {
         <span className={Styles.icon}>
           <SiYourtraveldottv />
         </span>
-        <span>MakeMyTrip</span>
+        <span>MakeMyTravel</span>
       </a>
     </div>
   );

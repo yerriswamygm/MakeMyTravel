@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import Styles from "./_auth.module.css";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Link, useNavigate, useRouteLoaderData } from "react-router-dom";
-import { auth } from "../../apis/Firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
-// import { toast } from 'react-toastify';
-
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { auth } from "../../apis/firebase";
+import { signInWithEmailAndPassword } from "@firebase/auth";
 const Login = () => {
   let navigate = useNavigate();
   let [toggle, setToggle] = useState(false);
@@ -13,7 +12,6 @@ const Login = () => {
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [isLoading, setIsLoading] = useState(false);
-
   let togglePassword = () => {
     setToggle(!toggle);
     setShowPassword(!showPassword);
@@ -24,69 +22,66 @@ const Login = () => {
     try {
       setIsLoading(true);
       let userData = await signInWithEmailAndPassword(auth, email, password);
+      console.log(userData);
       if (userData.user.emailVerified === true) {
         navigate("/");
-        // toast.success(`Successfully ${email} logged in`);
-        window.alert(`Successfully ${email} logged in`);
+        toast.success(`successfully ${email} logged in`);
       } else {
-        // toast.error("Email not yet verified");
-        window.alert("Email not verified");
+        toast.error("Email not yet Verified");
       }
     } catch (error) {
-      // toast.error(error.code);
-      window.alert(error.code);
+      toast.error(error.code);
     }
     setEmail("");
     setPassword("");
     setIsLoading(false);
   };
+
   return (
     <section id={Styles.authLoginBlock}>
       <article>
         <div className="container">
           <h1>Login</h1>
+          <Link to="/phone-auth" className={Styles.phoneAuth}>
+            Login with Phone number
+          </Link>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
                 type="email"
-                // id=""
+                placeholder="enter an email"
                 value={email}
-                placeholder="Enter an email"
                 onChange={e => setEmail(e.target.value)}
                 required
               />
             </div>
-
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <input
                 type={showPassword === true ? "text" : "password"}
-                // id=""
+                placeholder="enter a password"
                 value={password}
-                placeholder="Enter password"
                 onChange={e => setPassword(e.target.value)}
                 required
-                autoComplete="on"
               />
-
               <span className={Styles.eyeIcon} onClick={togglePassword}>
                 {showPassword === true ? <AiFillEye /> : <AiFillEyeInvisible />}
               </span>
             </div>
             <div className="form-group">
               <aside>
-                <span>Don't have an account ?</span>
+                <span>Don't have an account </span>
                 <span>
                   <Link to="/register">Register</Link>
                 </span>
               </aside>
               <p>
-                <Link to="/reset-password">Forgot Password</Link>
+                <Link to="/reset-password">Reset password</Link>
               </p>
             </div>
             <div className="form-group">
-              <button>{isLoading === true ? "Loading..." : "Login"}</button>
+              <button>{isLoading === true ? "loading..." : "login"}</button>
             </div>
           </form>
         </div>

@@ -1,11 +1,11 @@
 import React from "react";
 import Logo from "./Logo";
 import Menu from "./Menu";
-import Styles from "./_navbar.module.css";
+import Styles from './_navbar.module.css';
 
 const Navbar = () => {
   return (
-    <section id={Styles.navbarBlock}>
+      <section id={Styles.navbarBlock}>
       <article>
         <Logo />
         <Menu />
