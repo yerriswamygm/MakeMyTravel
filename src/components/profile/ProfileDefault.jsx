@@ -50,26 +50,12 @@ const ProfileDefault = () => {
             <aside className={Styles.profileUser}>
               <Fragment>
                 <p>
-                  <strong>Firstname : </strong>
-                  {profile.firstname}
+                  <p>Firstname : {profile.firstname} </p>
+                  <p>Lastname : {profile.lastname}</p>
                 </p>
-                <p>
-                  <strong>Lastname : </strong>
-                  {profile.lastname}
-                </p>
-                <p>
-                  <strong>Gender : </strong>
-                  {profile.gender}
-                </p>
-                <p>
-                  <strong>City : </strong>
-                  {profile.city}
-                </p>
-
-                <p>
-                  <strong>Address : </strong>
-                  {profile.address}
-                </p>
+                <p>{profile.city}</p>
+                <p>{profile.gender}</p>
+                <p>{profile.address}</p>
               </Fragment>
             </aside>
           </article>
